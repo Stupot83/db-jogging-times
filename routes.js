@@ -1,7 +1,9 @@
 var express = require('express')
 var bcrypt = require('bcrypt')
+var db = require('./database')
 
 var User = require('./models/User')
+var Times = require('./models/Times')
 
 var routes = new express.Router()
 
@@ -88,14 +90,18 @@ routes.get('/sign-out', function(req, res) {
   res.redirect('/sign-in')
 })
 
-// list all job times
+// list all jog times
 routes.get('/times', function(req, res) {
   var loggedInUser = User.findById(req.cookies.userId)
 
-  // fake stats - TODO: get real stats from the database
-  var totalDistance = 13.45
-  var avgSpeed = 5.42
-  var totalTime = 8.12322
+  var selectDistance = db.prepare('SELECT SUM(distance) As totaldistance FROM Times WHERE distance = ?')
+  var totalDistance = selectDistance.get(req.cookies.userId).totaldistance
+
+  var selectTime = db.prepare('SELECT SUM(duration) As totaltime FROM Times WHERE duration = ?')
+  var totalTime = selectTime.get(req.cookies.userId).totaltime
+
+  var avgSpeed = totalDistance / totalTime
+
 
   res.render('list-times.html', {
     user: loggedInUser,
@@ -146,10 +152,14 @@ routes.get('/times/new', function(req, res) {
 routes.post('/times/new', function(req, res) {
   var form = req.body
 
+  var timesId = Times.insert(form.startTime, form.duration, form.distance)
+
   console.log('create time', form)
 
-  // TODO: save the new time
+  // set the timesId as a cookie
+  res.cookie('timesId', timesId)
 
+  // redirect to the logged in page
   res.redirect('/times')
 })
 
