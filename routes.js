@@ -106,29 +106,29 @@ routes.get('/times', function(req, res) {
     },
 
     // fake times: TODO: get the real jog times from the db
-    times: [
-      {
-        id: 1,
-        startTime: '4:36pm 1/11/18',
-        duration: 12.23,
-        distance: 65.43,
-        avgSpeed: 5.34
-      },
-      {
-        id: 2,
-        startTime: '2:10pm 3/11/18',
-        duration: 67.4,
-        distance: 44.43,
-        avgSpeed: 0.66
-      },
-      {
-        id: 3,
-        startTime: '3:10pm 4/11/18',
-        duration: 67.4,
-        distance: 44.43,
-        avgSpeed: 0.66
-      }
-    ]
+    // times: [
+    //   {
+    //     id: 1,
+    //     startTime: '4:36pm 1/11/18',
+    //     duration: 12.23,
+    //     distance: 65.43,
+    //     avgSpeed: 5.34
+    //   },
+    //   {
+    //     id: 2,
+    //     startTime: '2:10pm 3/11/18',
+    //     duration: 67.4,
+    //     distance: 44.43,
+    //     avgSpeed: 0.66
+    //   },
+    //   {
+    //     id: 3,
+    //     startTime: '3:10pm 4/11/18',
+    //     duration: 67.4,
+    //     distance: 44.43,
+    //     avgSpeed: 0.66
+    //   }
+    // ]
   })
 })
 
